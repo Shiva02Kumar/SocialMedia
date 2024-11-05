@@ -1,0 +1,81 @@
+.sideBar {
+    width: 300px;
+    height: 100vh;
+    background: linear-gradient(#461111, #B3541E);
+    color: #ECDBBA;
+    top: 0;
+    left: 0;
+    transition:all 0.5s
+}
+
+.sideBarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+}
+
+.sideBarHeader h1 {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.bars {
+    margin: 0 10px;
+    font-size: 40px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    color: #ECDBBA;
+    background-color: none  ;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.5s;
+}
+
+.link:hover {
+    background-color: #A13333;
+}
+
+.linkName {
+    padding: 0 15px;
+    font-weight: bold;
+}
+
+.linkIcon {
+    font-size: 30px;
+    margin: 0 10px;
+}
+
+.active {
+    background-color: #A13333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    color: #ECDBBA;
+    background-color: none  ;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.5s;
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    justify-content: space-between;
+    color: #ECDBBA;
+    background-color: transparent;
+    border: none;
+    width: -webkit-fill-available;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.5s;
+}
