@@ -1,7 +1,7 @@
 .mainComponent {
     background-color: #D8E9A8;
     height: 90vh;
-    width: 80vw;
+    width: 90vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,11 +29,58 @@
     border-radius: 10px;
     padding: 10px;
     margin: 5px 5px 5px 15px;
+    z-index: 1000;
 }
 
 .sidePanelHeaderIcon {
     font-size: 1.5rem;
     margin: 5px 10px;
+    width: 20px;
+}
+
+.dropdownContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownMenu {
+    position: absolute;
+    right: 0;
+    min-width: 150px;
+    background: #1E5128;
+    color: #D8E9A8;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    /* padding: 10px; */
+    z-index: 1000;
+}
+
+/* Dropdown Items */
+.dropdownItem {
+    padding: 10px;
+    cursor: pointer;
+    /* color: #333; */
+    transition: background-color 0.2s;
+    /* text-align: left; */
+    display: flex;
+    align-items: center;
+}
+
+.dropdownItem:hover {
+    background-color: #4E9F3D;
+    border-radius: 10px;
+}
+
+.dropdownIcon {
+    font-size: 1.5rem;
+    margin: 5px;
+}
+
+.dropdownText {
+    font-size: 1rem;
+    margin: 5px;
 }
 
 .sidePanelSearch {
@@ -80,19 +127,21 @@
     margin: 5px 5px 5px 15px;
     flex: 1;
     overflow-y: auto;
-    /* scrollbar-width: thin; */
 }
 
-.sidePanelConversations::-webkit-scrollbar {
+.sidePanelConversations::-webkit-scrollbar,
+.mainPanelChatArea::-webkit-scrollbar {
     width: 8px;
 }
 
-.sidePanelConversations::-webkit-scrollbar-track {
+.sidePanelConversations::-webkit-scrollbar-track,
+.mainPanelChatArea::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
 }
 
-.sidePanelConversations::-webkit-scrollbar-thumb {
+.sidePanelConversations::-webkit-scrollbar-thumb,
+.mainPanelChatArea::-webkit-scrollbar-thumb {
     /* background-color: rgba(70, 17, 17, 0.7); */
     background-color: #4E9F3D;
     border-radius: 10px;
@@ -193,6 +242,7 @@
     padding: 5px;
     margin: 5px 15px 5px 5px;
     flex: 1;
+    overflow-y: auto;
 }
 
 .mainPanelChatInput {
@@ -219,3 +269,43 @@
     width: 100%;
 }
 
+.sentByOthers {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin: 10px;
+}
+
+.othersInfo {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.sentByMe {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 10px;
+}
+
+.myInfo {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.messageTime {
+    text-align: end;
+    font-size: 0.8rem;
+}

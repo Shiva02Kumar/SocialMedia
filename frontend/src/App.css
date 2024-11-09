@@ -12,6 +12,7 @@ body {
     padding: 0;
     background-color: #191A19;
     color: #191A19;
+    scroll-behavior: smooth;
 }
 
 .sideBar {

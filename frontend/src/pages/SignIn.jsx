@@ -60,8 +60,8 @@ function SignIn() {
   return (
     <div className="login-container">
       <div className="text-container">
-        <h1>Welcome</h1>
-        <h2>Get started with your Account....</h2>
+        <h1>GupShup</h1>
+        <h2>Ready to dive in? Let's make today productive!</h2>
       </div>
       <div className="form-container">
         <h2>Log In</h2>

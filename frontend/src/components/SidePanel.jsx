@@ -1,11 +1,11 @@
-import { React, useState } from 'react'
-import { ChatState } from '../contexts/ChatProvider';
+import { React, useEffect, useRef, useState } from 'react'
+// import { ChatState } from '../contexts/ChatProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserPlus, faUsers, faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faPlus, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import Conversation from './Conversation';
 
 function SidePanel() {
-  const { user } = ChatState();
+  // const { user } = ChatState();
   const [conversations] = useState([
     {
       id: 1,
@@ -51,7 +51,33 @@ function SidePanel() {
     }
   ]);
 
-  console.log(user);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleProfileClick = () => {
+    console.log("Profile clicked");
+  };
+
+  const handleLogoutClick = () => {
+    console.log("Logout clicked");
+  };
 
   return (
     <div className='sidePanel'>
@@ -60,9 +86,22 @@ function SidePanel() {
           <h1>Messages</h1>
         </div>
         <div>
-          <FontAwesomeIcon icon={faUserPlus} className='sidePanelHeaderIcon' />
-          <FontAwesomeIcon icon={faUsers} className='sidePanelHeaderIcon' />
-          <FontAwesomeIcon icon={faCirclePlus} className='sidePanelHeaderIcon' />
+          <FontAwesomeIcon icon={faPlus} className='sidePanelHeaderIcon' />
+          <div className="dropdownContainer" ref={dropdownRef}>
+            <FontAwesomeIcon icon={faEllipsisVertical} className='sidePanelHeaderIcon' onClick={toggleDropdown} />
+            {dropdownVisible && (
+              <div className="dropdownMenu">
+                <div className="dropdownItem" onClick={handleProfileClick}>
+                  <FontAwesomeIcon icon={faUser} className='dropdownIcon'/>
+                  <p className='dropdownText'>Profile</p>
+                </div>
+                <div className="dropdownItem" onClick={handleLogoutClick}>
+                  <FontAwesomeIcon icon={faRightFromBracket} className='dropdownIcon' />
+                  <p className='dropdownText'>Log Out</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="sidePanelSearch">
@@ -71,9 +110,7 @@ function SidePanel() {
       </div>
       <div className="sidePanelConversations">
         {conversations.map((ConversationInfo) => {
-          console.log(ConversationInfo);
-
-          return <Conversation  key={ConversationInfo.id} {...ConversationInfo} />
+          return <Conversation key={ConversationInfo.id} {...ConversationInfo} />
         })}
       </div>
     </div>

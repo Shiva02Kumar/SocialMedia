@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 function Conversation(props) {
-    console.log(props.name);
 
     function formatMessageTime(dateString) {
         const messageDate = new Date(dateString);

@@ -125,8 +125,8 @@ function SignUp() {
         </form>
       </div>
       <div className="text-container">
-        <h1>Welcome</h1>
-        <h2>Get started with your Account....</h2>
+        <h1>GupShup</h1>
+        <h2>A new journey begins here. Let's get started!</h2>
       </div>
       <ToastContainer />
     </div>

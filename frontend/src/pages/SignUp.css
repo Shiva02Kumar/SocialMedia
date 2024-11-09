@@ -4,14 +4,14 @@ body {
     font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #040303;
-    color: #040303;
+    background-color: #191A19;
+    color: #191A19;
 }
 
 .login-container {
     display: flex;
     align-items: center;
-    background-color: #ECDBBA;
+    background-color: #D8E9A8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 60%;
     justify-content: space-evenly;
@@ -22,8 +22,8 @@ body {
 .text-container {
     text-align: center;
     padding: 20px;
-    color: #040303;
-    background: linear-gradient(#461111, #B3541E);
+    color: #D8E9A8;
+    background: linear-gradient(#1E5128, #4E9F3D);
     height: 90vh;
     width: 45%;
     display: flex;
@@ -32,10 +32,11 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     border-radius: 60px;
+    letter-spacing: 5px;
 }
 
 .text-container h1 {
-    font-size: 36px;
+    font-size: 3rem;
     margin: 0;
     margin-bottom: 1rem;
 }
@@ -60,28 +61,30 @@ body {
     width: 100%;
     padding: 5px;
     /* border: 1px solid #F9F7F7; */
-    background-color: #ECDBBA;
+    background-color: #D8E9A8;
     border-radius: 3px;
     border-style: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #191A19;
+    font-size: 1rem;
 }
 
 .form-group button {
     width: 100%;
     padding: 10px;
-    background-color: #A13333;
-    color: #ECDBBA;
+    background-color: #4E9F3D;
+    color: #D8E9A8;
     border: none;
     cursor: pointer;
     margin: 10px 0px;
     transition: background-color 0.3s;
+    font-size: 1rem;
 }
 
 .button {
     display: inline-block;
     padding: .75rem 1.25rem;
     border-radius: 10rem;
-    color: #ECDBBA;
+    color: #D8E9A8;
     text-transform: uppercase;
     font-size: 1rem;
     letter-spacing: .15rem;
@@ -109,14 +112,14 @@ body {
         left: 0;
         width: 0%;
         height: 100%;
-        background-color: #461111;
+        background-color: #1E5128;
         transition: all .3s;
         border-radius: 10rem;
         z-index: -1;
     }
 
     &:hover {
-        color: #ECDBBA;
+        color: #D8E9A8;
 
         &:before {
             width: 100%;
@@ -133,9 +136,10 @@ body {
 
 .labelText {
     text-align: left;
+    font-size: 1rem;
 }
 
 .form-container h2 {
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 800;
 }

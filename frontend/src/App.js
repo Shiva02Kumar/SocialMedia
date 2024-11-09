@@ -10,20 +10,30 @@ import { ToastContainer } from 'react-toastify';
 import Profile from './pages/Profile';
 import SideBar from './components/SideBar';
 import Search from './pages/Search';
+// import SidePanel from './components/SidePanel';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const ProtectedRoute = () => {
     console.log(isAuthenticated);
-    
+
     return isAuthenticated ? (
       <div className="protectedLayout">
-        <SideBar />
+        {/* <SideBar /> */}
         <Outlet />
       </div>
-    )  : <Navigate to='/signin' />
+    ) : <Navigate to='/signin' />
   }
+
+  // const ChatRoute = () => {
+  //   return (
+  //     <div>
+  //       <SidePanel />
+  //       <Outlet />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="App">
@@ -33,14 +43,16 @@ function App() {
         <Route path='/signin' element={isAuthenticated ? <Navigate to='/home' /> : <SignIn />} />
         <Route path='/signup' element={isAuthenticated ? <Navigate to='/home' /> : <SignUp />} />
         <Route element={<ProtectedRoute />}>
-          <Route path='/home' element={<Home />} />
-          <Route path='/chats' element={<Chats />} />
+          {/* <Route element={<ChatRoute />}> */}
+            <Route path='/home' element={<Home />} />
+            <Route path='/chats' element={<Chats />} />
+          {/* </Route> */}
           <Route path='/Search' element={<Search />} />
           <Route path='/profile' element={<Profile />} />
         </Route>
-        <Route path='*' element={<Navigate to='/'/>} />
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
