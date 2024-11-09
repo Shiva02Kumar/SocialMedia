@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import '../components/SideBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome,faBars, faMessage, faUser, faRightFromBracket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
@@ -6,9 +6,24 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { handleError, handleSuccess } from '../utils/ToastHandle';
 
 function SideBar() {
-    const [isOpen, setisOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
-    const toggle = () => { setisOpen(!isOpen) };
+    const sidebarRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const toggle = () => { setIsOpen(!isOpen) };
     const menuItem = [
         {
             path: '/home',
@@ -67,7 +82,7 @@ function SideBar() {
     }
 
     return (
-        <div className='sideBar' style={{ width: isOpen ? "300px" : "70px" }}>
+        <div ref={sidebarRef} className='sideBar' style={{ width: isOpen ? "300px" : "70px" }}>
             <div className="sideBarHeader">
                 <div className='bars'>
                     <FontAwesomeIcon icon={faBars} onClick={toggle} />

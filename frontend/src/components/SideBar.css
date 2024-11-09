@@ -1,8 +1,10 @@
 .sideBar {
     width: 300px;
     height: 100vh;
-    background: linear-gradient(#461111, #B3541E);
-    color: #ECDBBA;
+    /* background: linear-gradient(#1E5128, #4E9F3D); */
+    background-color: #1E5128;
+    box-shadow: 40px 0 10px rgba(0, 0, 0, 0.4);
+    color: #D8E9A8;
     top: 0;
     left: 0;
     transition:all 0.5s
@@ -32,7 +34,7 @@
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    color: #ECDBBA;
+    color: #D8E9A8;
     background-color: none  ;
     text-decoration: none;
     padding: 10px;
@@ -40,7 +42,7 @@
 }
 
 .link:hover {
-    background-color: #A13333;
+    background-color: #4E9F3D;
 }
 
 .linkName {
@@ -54,12 +56,12 @@
 }
 
 .active {
-    background-color: #A13333;
+    background-color: #4E9F3D;
     display: flex;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    color: #ECDBBA;
+    color: #D8E9A8;
     background-color: none  ;
     text-decoration: none;
     padding: 10px;
@@ -71,7 +73,7 @@
     align-items: center;
     font-family: "Poppins", sans-serif;
     justify-content: space-between;
-    color: #ECDBBA;
+    color: #D8E9A8;
     background-color: transparent;
     border: none;
     width: -webkit-fill-available;

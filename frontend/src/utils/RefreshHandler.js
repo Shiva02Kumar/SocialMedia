@@ -1,8 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ChatState } from '../contexts/ChatProvider';
 
 function RefreshHandler({ setIsAuthenticated }) {
   const navigate = useNavigate();
+
+  const { setUser } = ChatState();
 
   useEffect(() => {
     const fetchProtectedData = async () => {
@@ -14,7 +17,7 @@ function RefreshHandler({ setIsAuthenticated }) {
         });
 
         const data = await response.json();
-
+        setUser(data.userData);
         if (data.success) {
           setIsAuthenticated(true);
         }
@@ -27,7 +30,7 @@ function RefreshHandler({ setIsAuthenticated }) {
     };
 
     fetchProtectedData();
-  }, [navigate, setIsAuthenticated]);
+  }, [navigate, setIsAuthenticated, setUser]);
   return (
     null
   )

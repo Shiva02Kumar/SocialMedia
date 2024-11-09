@@ -37,8 +37,7 @@ function SignIn() {
       })
       const result = await response.json();
 
-      const { message, success, error } = result;
-      console.log(result);
+      const { message, success} = result;
       
       if (success) {
         console.log(message);

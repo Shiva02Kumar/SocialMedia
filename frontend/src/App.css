@@ -10,10 +10,21 @@ body {
     font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #040303;
-    color: #040303;
+    background-color: #191A19;
+    color: #191A19;
 }
 
+.sideBar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+  }
+
 .protectedLayout {
-    display: Flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }

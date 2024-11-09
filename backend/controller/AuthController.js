@@ -24,8 +24,10 @@ async function signIn(req, res) {
                 });
         }
 
+        const { password: _, ...userData } = user.toObject();
+
         const jwtToken = jwt.sign(
-            { email: user.email, _id: user._id },
+            { userData },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -40,10 +42,11 @@ async function signIn(req, res) {
         res.cookie('token', jwtToken, cookieOptions);
         res.cookie('isLoggedIn', true, cookieOptions);
 
+
         return res.status(200).json({
             message: "SignIn Successful",
             success: true,
-            userData: user
+            userData: userData
         });
     } catch (err) {
         return res.status(500).json({
@@ -56,7 +59,7 @@ async function signIn(req, res) {
 
 async function signUp(req, res) {
     try {
-        const { name, email, password, confirmPassword} = req.body;
+        const { name, email, password, confirmPassword } = req.body;
         console.log(req.file.filename);
         if (req.file) {
             pic = req.file.filename;
@@ -68,7 +71,7 @@ async function signUp(req, res) {
         }
         const newUser = new userModel({ name, email, password, confirmPassword, pic });
         console.log(newUser);
-        
+
         await newUser.save()
         return res.status(201)
             .json({
@@ -112,7 +115,117 @@ async function logOut(req, res) {
 }
 
 async function protected(req, res) {
-    res.status(200).json({ message: 'User Authenticated', user: req.user, success: true });
+    res.status(200).json({ message: 'User Authenticated', userData: req.user, success: true });
 }
 
-module.exports = { signIn, signUp, logOut, protected }
+async function searchUsers(req, res) {
+    try {
+
+        const query = req.query.search;
+
+        if (!query) {
+            return res.status(400).json({
+                message: "Search query is required",
+                success: false,
+            });
+        }
+        console.log(query);
+        const users = await userModel.find({
+            _id: { $ne: req.user._id },
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { email: { $regex: query, $options: 'i' } }
+            ]
+        }).select('-password');
+        console.log(users);
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                message: "No users found",
+                success: false,
+            });
+        }
+        res.status(200).json({
+            message: "Users found",
+            success: true,
+            data: users
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error searching for users",
+            success: false,
+            error,
+        });
+    }
+}
+
+async function addDummyUsers(req, res) {
+    const dummyUsers = [
+        {
+            name: 'Alice Johnson',
+            email: `alice.johnson@example.com`,
+            password: 'alicePass123',
+            confirmPassword: 'alicePass123',
+        },
+        {
+            name: 'Bob Smith',
+            email: `bob.smith@example.com`,
+            password: 'bobPass123',
+            confirmPassword: 'bobPass123',
+        },
+        {
+            name: 'Charlie Brown',
+            email: `charlie.brown@example.com`,
+            password: 'charliePass123',
+            confirmPassword: 'charliePass123',
+        },
+        {
+            name: 'Diana Prince',
+            email: `diana.prince@example.com`,
+            password: 'dianaPass123',
+            confirmPassword: 'dianaPass123',
+        },
+        {
+            name: 'Ethan Hunt',
+            email: `ethan.hunt@example.com`,
+            password: 'ethanPass123',
+            confirmPassword: 'ethanPass123',
+        },
+        {
+            name: 'Fiona Gallagher',
+            email: `fiona.gallagher@example.com`,
+            password: 'fionaPass123',
+            confirmPassword: 'fionaPass123',
+        },
+        {
+            name: 'George Clark',
+            email: `george.clark@example.com`,
+            password: 'georgePass123',
+            confirmPassword: 'georgePass123',
+        },
+    ];
+
+    for (const user of dummyUsers) {
+        // Check if user already exists by email
+        const existingUser = await userModel.findOne({ email: user.email });
+        if (!existingUser) {
+            try {
+                const newUser = new userModel({
+                    name: user.name,
+                    email: user.email,
+                    password: user.password,
+                    confirmPassword: user.confirmPassword,
+                });
+                await newUser.save();
+                console.log(`User ${user.name} added successfully.`);
+            } catch (error) {
+                console.error(`Error adding user ${user.name}:`, error);
+            }
+        } else {
+            console.log(`User with email ${user.email} already exists.`);
+        }
+    }
+    res.status(201).json({ message: "Done", success: true })
+}
+
+module.exports = { signIn, signUp, logOut, protected, searchUsers, addDummyUsers }

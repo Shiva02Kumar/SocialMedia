@@ -48,7 +48,7 @@ function SignUp() {
         body: formData
       })
       const result = await response.json();
-      const { message, success, error } = result;
+      const { message, success} = result;
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
