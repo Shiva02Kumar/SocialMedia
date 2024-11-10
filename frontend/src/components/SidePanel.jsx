@@ -3,6 +3,7 @@ import { React, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faPlus, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import Conversation from './Conversation';
+import { useNavigate } from 'react-router-dom'
 
 function SidePanel() {
   // const { user } = ChatState();
@@ -53,6 +54,7 @@ function SidePanel() {
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -67,9 +69,6 @@ function SidePanel() {
     };
   }, []);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
 
   const handleProfileClick = () => {
     console.log("Profile clicked");
@@ -86,13 +85,13 @@ function SidePanel() {
           <h1>Messages</h1>
         </div>
         <div>
-          <FontAwesomeIcon icon={faPlus} className='sidePanelHeaderIcon' />
+          <FontAwesomeIcon icon={faPlus} className='sidePanelHeaderIcon' onClick={() => { navigate('/CreateGroup'); }} />
           <div className="dropdownContainer" ref={dropdownRef}>
-            <FontAwesomeIcon icon={faEllipsisVertical} className='sidePanelHeaderIcon' onClick={toggleDropdown} />
+            <FontAwesomeIcon icon={faEllipsisVertical} className='sidePanelHeaderIcon' onClick={() => { setDropdownVisible(!dropdownVisible); }} />
             {dropdownVisible && (
               <div className="dropdownMenu">
                 <div className="dropdownItem" onClick={handleProfileClick}>
-                  <FontAwesomeIcon icon={faUser} className='dropdownIcon'/>
+                  <FontAwesomeIcon icon={faUser} className='dropdownIcon' />
                   <p className='dropdownText'>Profile</p>
                 </div>
                 <div className="dropdownItem" onClick={handleLogoutClick}>

@@ -1,7 +1,7 @@
 import { React, useEffect, useRef, useState } from 'react'
 import '../components/SideBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome,faBars, faMessage, faUser, faRightFromBracket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faBars, faMessage, faUser, faRightFromBracket, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { handleError, handleSuccess } from '../utils/ToastHandle';
 
@@ -23,7 +23,6 @@ function SideBar() {
         };
     }, []);
 
-    const toggle = () => { setIsOpen(!isOpen) };
     const menuItem = [
         {
             path: '/home',
@@ -34,6 +33,11 @@ function SideBar() {
             path: '/chats',
             name: "Messages",
             icon: <FontAwesomeIcon icon={faMessage} />,
+        },
+        {
+            path: '/CreateGroup',
+            name: "Create Group",
+            icon: <FontAwesomeIcon icon={faPlus} />,
         },
         {
             path: '/search',
@@ -77,17 +81,13 @@ function SideBar() {
         }
     }
 
-    const sendHome = () => {
-        navigate('/home')
-    }
-
     return (
         <div ref={sidebarRef} className='sideBar' style={{ width: isOpen ? "300px" : "70px" }}>
             <div className="sideBarHeader">
                 <div className='bars'>
-                    <FontAwesomeIcon icon={faBars} onClick={toggle} />
+                    <FontAwesomeIcon icon={faBars} onClick={() => { setIsOpen(!isOpen); }} />
                 </div>
-                <h1 onClick={sendHome}>GupShup</h1>
+                <h1 onClick={() => { navigate('/home'); }}>GupShup</h1>
             </div>
             {
                 menuItem.map((item, index) => {

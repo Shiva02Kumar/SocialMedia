@@ -37,11 +37,11 @@ function SignIn() {
       })
       const result = await response.json();
 
-      const { message, success} = result;
-      
+      const { message, success } = result;
+
       if (success) {
         console.log(message);
-        
+
         handleSuccess(message);
         setTimeout(() => {
           navigate('/home')
@@ -52,7 +52,7 @@ function SignIn() {
       }
     } catch (err) {
       console.log(err);
-      
+
       handleError(err)
     }
   }
@@ -87,7 +87,9 @@ function SignIn() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="button">Log In</button>
+            <div>
+              <button type="submit" className="button">Log In</button>
+            </div>
             <span>Don't have an Account? <Link to="/signup">Click here</Link></span>
           </div>
         </form>

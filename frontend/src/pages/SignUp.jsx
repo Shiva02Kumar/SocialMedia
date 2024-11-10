@@ -48,7 +48,7 @@ function SignUp() {
         body: formData
       })
       const result = await response.json();
-      const { message, success} = result;
+      const { message, success } = result;
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
@@ -119,7 +119,9 @@ function SignUp() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="button">SignUP</button>
+            <div>
+              <button type="submit" className="button">SignUP</button>
+            </div>
             <span>Already have an Account?<Link to="/signin">Click here</Link></span>
           </div>
         </form>

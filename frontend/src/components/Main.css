@@ -1,7 +1,7 @@
 .mainComponent {
     background-color: #D8E9A8;
     height: 90vh;
-    width: 90vw;
+    width: 85vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@
     border-radius: 10px;
     padding: 10px;
     margin: 5px 5px 5px 15px;
-    z-index: 1000;
+    z-index: 100;
 }
 
 .sidePanelHeaderIcon {
@@ -231,7 +231,7 @@
 
 .mainPanelChatArea {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     /* justify-content: center; */
     /* align-items: center; */
     background: rgba(255, 255, 255, 0.1);
@@ -279,8 +279,10 @@
 .othersInfo {
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    /* background: rgba(255, 255, 255, 0.1); */
+    background-color: #1E5128;
+    color: #D8E9A8;
+    /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -297,8 +299,10 @@
 .myInfo {
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    /* background: rgba(255, 255, 255, 0.1); */
+    background-color: #4E9F3D;
+    color: #D8E9A8;
+    /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -308,4 +312,57 @@
 .messageTime {
     text-align: end;
     font-size: 0.8rem;
+}
+
+.homePanelArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px 15px 5px 5px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.homePanelIcon {
+    font-size: 6rem;
+    margin: 50px;
+}
+
+.createGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px 15px 5px 5px;
+    flex: 1 1;
+    overflow-y: auto;
+}
+
+.createGroupInputBox { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px;
+    width: 90%;
 }
