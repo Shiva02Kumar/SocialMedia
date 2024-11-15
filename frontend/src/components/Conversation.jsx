@@ -1,14 +1,15 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Conversation(props) {
+    const navigate = useNavigate();
 
     function formatMessageTime(dateString) {
         const messageDate = new Date(dateString);
         const now = new Date();
 
-        // Check if the message is from today
         const isToday =
             messageDate.getDate() === now.getDate() &&
             messageDate.getMonth() === now.getMonth() &&
@@ -18,7 +19,6 @@ function Conversation(props) {
             return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
-        // Check if the message is from yesterday
         const yesterday = new Date(now);
         yesterday.setDate(now.getDate() - 1);
 
@@ -31,19 +31,17 @@ function Conversation(props) {
             return "Yesterday";
         }
 
-        // Check if the message is from the current year
         const isThisYear = messageDate.getFullYear() === now.getFullYear();
 
         if (isThisYear) {
             return messageDate.toLocaleDateString([], { day: '2-digit', month: 'short' });
         }
 
-        // Otherwise, return the month and year
         return messageDate.toLocaleDateString([], { month: 'short', year: 'numeric' });
     }
 
     return (
-        <div className='Conversation'>
+        <div className='Conversation' onClick={() => { navigate('/chats'); }}>
             <div className='conProfile'>
                 <FontAwesomeIcon icon={faUser} className='sidePanelHeaderIcon' />
             </div>

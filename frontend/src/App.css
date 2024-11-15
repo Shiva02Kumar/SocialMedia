@@ -10,9 +10,20 @@ body {
     font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #191A19;
-    color: #191A19;
+    background-color: #FBF8F1;
+    color: black;
     scroll-behavior: smooth;
+}
+
+.App {
+    background-color: #FBF8F1;
+    color: black;
+    transition: all 0.5s;
+}
+
+.darkApp {
+    background-color: #222831 !important;
+    color: #EEEEEE !important;
 }
 
 .sideBar {

@@ -1,12 +1,17 @@
 import { React, useEffect, useRef, useState } from 'react'
 import '../components/SideBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faBars, faMessage, faUser, faRightFromBracket, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faBars, faMessage, faUser, faRightFromBracket, faMagnifyingGlass, faPlus, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { handleError, handleSuccess } from '../utils/ToastHandle';
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleTheme } from '../utils/store'
 
 function SideBar() {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
+    const lightMode = useSelector((state) => state.themeKey);
+
     const navigate = useNavigate();
     const sidebarRef = useRef(null);
 
@@ -82,7 +87,7 @@ function SideBar() {
     }
 
     return (
-        <div ref={sidebarRef} className='sideBar' style={{ width: isOpen ? "300px" : "70px" }}>
+        <div ref={sidebarRef} className={'sideBar' + (lightMode ? '' : ' darkSideBar')} style={{ width: isOpen ? "300px" : "70px" }}>
             <div className="sideBarHeader">
                 <div className='bars'>
                     <FontAwesomeIcon icon={faBars} onClick={() => { setIsOpen(!isOpen); }} />
@@ -91,13 +96,17 @@ function SideBar() {
             </div>
             {
                 menuItem.map((item, index) => {
-                    return <NavLink to={item.path} key={index} className={({ isActive }) => isActive ? "active" : "link"} >
+                    return <NavLink to={item.path} key={index} className={({ isActive }) => `${isActive ? (lightMode ? "active" : "darkActive") : "link"}${lightMode ? "" : " darkLink"}`} >
                         <div className="linkIcon">{item.icon}</div>
                         <h2 className="linkName">{item.name}</h2>
                     </NavLink>
                 })
             }
-            <button onClick={handleLogout} className="link logoutButton">
+            <div onClick={() => { dispatch(toggleTheme()) }} className={"link logoutButton" + (lightMode ? '' : ' darkLink')}>
+                <div className="linkIcon"><FontAwesomeIcon icon={(lightMode ? faMoon : faSun)} /></div>
+                <h2 className="linkName">Switch Theme</h2>
+            </div>
+            <button onClick={handleLogout} className={"link logoutButton" + (lightMode ? '' : ' darkLink')}>
                 <div className="linkIcon"><FontAwesomeIcon icon={faRightFromBracket} /></div>
                 <h2 className="linkName">LogOut</h2>
             </button>

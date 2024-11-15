@@ -1,18 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const mongoUrl = process.env.MONGO_CONNECT;
-
-mongoose.connect(mongoUrl)
-    .then(() => {
-        console.log('MongoDB connected...');
-    })
-    .catch((err) => {
-        console.log('MongoDB Connection Error', err);
-        console.log(mongoUrl);
-    })
-
-
 const userSchema = mongoose.Schema({
     name: {
         type: String,
@@ -48,7 +36,7 @@ userSchema.pre('save', function () {
 
 userSchema.pre('save', async function (next) {
     try {
-        const saltRounds = 10;
+        const saltRounds = bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(this.password, saltRounds);
         this.password = hashedPassword;
         next();

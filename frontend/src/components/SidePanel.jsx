@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faPlus, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import Conversation from './Conversation';
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 function SidePanel() {
   // const { user } = ChatState();
@@ -53,6 +54,7 @@ function SidePanel() {
   ]);
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const lightMode = useSelector((state) => state.themeKey);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -104,8 +106,8 @@ function SidePanel() {
         </div>
       </div>
       <div className="sidePanelSearch">
-        <FontAwesomeIcon icon={faMagnifyingGlass} className='sidePanelHeaderIcon' />
-        <input type="text" name="search" id="searchBox" placeholder='Search' />
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="sidePanelHeaderIcon" />
+        <input type="text" name="search" id="searchBox" className={(lightMode? '' : " darkSearch")} placeholder='Search' />
       </div>
       <div className="sidePanelConversations">
         {conversations.map((ConversationInfo) => {

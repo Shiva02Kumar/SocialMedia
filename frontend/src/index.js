@@ -5,17 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
 import 'react-toastify/ReactToastify.css'
-import ChatProvider from './contexts/ChatProvider';
-
+// import ChatProvider from './contexts/ChatProvider';
+import { Provider } from "react-redux";
+import { store } from './utils/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChatProvider >
-      <BrowserRouter>
+    {/* <ChatProvider > */}
+    <BrowserRouter>
+      <Provider store={store}>
         <App />
-      </BrowserRouter>
-    </ChatProvider>
+      </Provider>
+    </BrowserRouter>
+    {/* </ChatProvider> */}
   </React.StrictMode>
 );
 

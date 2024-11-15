@@ -2,10 +2,12 @@ import { React, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { handleError, handleSuccess } from '../utils/ToastHandle';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './SignUp.css'
 
 function SignUp() {
-
+  const [loading, setLoading] = useState(false);
   const [signUpInfo, setsignUpInfo] = useState({
     name: '',
     email: '',
@@ -32,6 +34,7 @@ function SignUp() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { name, email, password, confirmPassword, pic } = signUpInfo;
     if (!name || !email || !password || !confirmPassword) {
       return handleError('Missing Fields')
@@ -48,18 +51,21 @@ function SignUp() {
         body: formData
       })
       const result = await response.json();
-      const { message, success } = result;
+      const { message, success} = result;
       if (success) {
         handleSuccess(message);
+        setLoading(false);
         setTimeout(() => {
           navigate('/signin')
         }, 1000)
       }
       else if (!success) {
         handleError(message);
+        setLoading(false);
       }
     } catch (err) {
       handleError(err)
+      setLoading(false);
     }
   }
 
@@ -118,10 +124,9 @@ function SignUp() {
               onChange={handlePhoto}
             />
           </div>
-          <div className="form-group">
-            <div>
-              <button type="submit" className="button">SignUP</button>
-            </div>
+          <div className="form-group submitGroup">
+            {/* <button type="submit" className="button">SignUP</button> */}
+            <button type="submit" className="button">{loading ? <FontAwesomeIcon icon={faSpinner} spinPulse/> : "Sign Up"}</button>
             <span>Already have an Account?<Link to="/signin">Click here</Link></span>
           </div>
         </form>

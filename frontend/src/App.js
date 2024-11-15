@@ -13,10 +13,11 @@ import Search from './pages/Search';
 import SidePanel from './components/SidePanel';
 import HomePanel from './components/HomePanel';
 import CreateGroup from './components/CreateGroup';
+import { useSelector } from 'react-redux';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const lightMode = useSelector((state) => state.themeKey);
   const ProtectedRoute = () => {
     console.log(isAuthenticated);
 
@@ -24,13 +25,14 @@ function App() {
       <div className="protectedLayout">
         <SideBar />
         <Outlet />
+        <ToastContainer />
       </div>
     ) : <Navigate to='/signin' />
   }
 
   const ChatRoute = () => {
     return (
-      <div className="mainComponent">
+      <div className={"mainComponent" + (lightMode? '' : " darkMain")}>
         <SidePanel />
         <Outlet />
       </div>
@@ -38,7 +40,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={"App" + (lightMode? '' : " darkApp")}>
       <RefreshHandler setIsAuthenticated={setIsAuthenticated} />
       <Routes>
         <Route path='/' element={<Navigate to='/signin' />} />

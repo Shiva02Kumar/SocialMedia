@@ -2,12 +2,17 @@
     width: 300px;
     height: 100vh;
     /* background: linear-gradient(#1E5128, #4E9F3D); */
-    background-color: #1E5128;
-    box-shadow: 40px 0 10px rgba(0, 0, 0, 0.4);
-    color: #D8E9A8;
+    background-color: #54BAB9;
+    box-shadow: 20px 0 10px rgba(0, 0, 0, 0.4);
+    color: black;
     top: 0;
     left: 0;
     transition:all 0.5s
+}
+
+.darkSideBar {
+    background-color: #219B9D !important;
+    color: #EEEEEE !important;
 }
 
 .sideBarHeader {
@@ -34,7 +39,8 @@
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    color: #D8E9A8;
+    /* color: #D8E9A8; */
+    color: black;
     background-color: none  ;
     text-decoration: none;
     padding: 10px;
@@ -42,7 +48,15 @@
 }
 
 .link:hover {
-    background-color: #4E9F3D;
+    background-color: #219B9D;
+}
+
+.darkLink:hover {
+    background-color: #54BAB9 !important;
+}
+
+.darkLink{
+    color: #EEEEEE !important;
 }
 
 .linkName {
@@ -55,15 +69,35 @@
 .linkIcon {
     font-size: 1.8rem;
     margin: 0 10px;
+    text-align: left;
+}
+
+.linkIcon svg {
+    width: 30px;
 }
 
 .active {
-    background-color: #4E9F3D;
+    background-color: #219B9D;
     display: flex;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    color: #D8E9A8;
+    /* color: #D8E9A8; */
+    color: black;
+    background-color: none  ;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.5s;
+}
+
+.darkActive {
+    background-color: #54BAB9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    /* color: #D8E9A8; */
+    /* color: black; */
     background-color: none  ;
     text-decoration: none;
     padding: 10px;
@@ -71,11 +105,12 @@
 }
 
 .logoutButton {
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     font-family: "Poppins", sans-serif;
-    justify-content: space-between;
-    color: #D8E9A8;
+    /* justify-content: space-between; */
+    /* color: #D8E9A8; */
+    color: black;
     background-color: transparent;
     border: none;
     width: -webkit-fill-available;

@@ -2,10 +2,12 @@ import { React, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { handleError, handleSuccess } from '../utils/ToastHandle';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './SignUp.css'
 
 function SignIn() {
-
+  const [loading, setLoading] = useState(false);
   const [signInInfo, setsignInInfo] = useState({
     email: '',
     password: ''
@@ -22,6 +24,7 @@ function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { email, password } = signInInfo;
     if (!email || !password) {
       return handleError('Missing Fields')
@@ -36,24 +39,25 @@ function SignIn() {
         credentials: 'include'
       })
       const result = await response.json();
-
+      
       const { message, success } = result;
-
+      
       if (success) {
-        console.log(message);
-
         handleSuccess(message);
         setTimeout(() => {
           navigate('/home')
         }, 1000)
+        setLoading(false);
       }
       else if (!success) {
         handleError(message);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
-
+      
       handleError(err)
+      setLoading(false);
     }
   }
 
@@ -88,7 +92,8 @@ function SignIn() {
           </div>
           <div className="form-group">
             <div>
-              <button type="submit" className="button">Log In</button>
+              {/* <button type="submit" className="button">Log In</button> */}
+              <button type="submit" className="button">{loading ? <FontAwesomeIcon icon={faSpinner} spinPulse/> : "Log In"}</button>
             </div>
             <span>Don't have an Account? <Link to="/signup">Click here</Link></span>
           </div>

@@ -1,11 +1,16 @@
 .mainComponent {
-    background-color: #D8E9A8;
+    background: linear-gradient(#E9DAC1, #F7ECDE);
     height: 90vh;
     width: 85vw;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+}
+
+.darkMain {
+    background: none !important;
+    background-color: #31363F !important; 
 }
 
 .sidePanel {
@@ -32,6 +37,10 @@
     z-index: 100;
 }
 
+.sidePanelHeader h1{
+    color: #219B9D;
+}
+
 .sidePanelHeaderIcon {
     font-size: 1.5rem;
     margin: 5px 10px;
@@ -47,8 +56,8 @@
     position: absolute;
     right: 0;
     min-width: 150px;
-    background: #1E5128;
-    color: #D8E9A8;
+    background: #219B9D;
+    /* color: #D8E9A8; */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -69,7 +78,7 @@
 }
 
 .dropdownItem:hover {
-    background-color: #4E9F3D;
+    background-color: #54BAB9;
     border-radius: 10px;
 }
 
@@ -94,6 +103,10 @@
     border-radius: 10px;
     padding: 10px;
     margin: 5px 5px 5px 15px;
+}
+
+.darkSearch {
+    color: #EEEEEE !important;
 }
 
 #searchBox {
@@ -143,7 +156,7 @@
 .sidePanelConversations::-webkit-scrollbar-thumb,
 .mainPanelChatArea::-webkit-scrollbar-thumb {
     /* background-color: rgba(70, 17, 17, 0.7); */
-    background-color: #4E9F3D;
+    background-color: #54BAB9;
     border-radius: 10px;
     /* border: 2px solid transparent; */
 }
@@ -163,8 +176,8 @@
 
 .Conversation:hover {
     /* background: linear-gradient(#1E5128, #4E9F3D); */
-    background-color: #4E9F3D;
-    color: #D8E9A8;
+    background-color: #54BAB9;
+    /* color: #D8E9A8; */
 }
 
 .conversationInfo {
@@ -280,8 +293,8 @@
     display: flex;
     flex-direction: column;
     /* background: rgba(255, 255, 255, 0.1); */
-    background-color: #1E5128;
-    color: #D8E9A8;
+    background-color: #219B9D;
+    /* color: #D8E9A8; */
     /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -300,8 +313,8 @@
     display: flex;
     flex-direction: column;
     /* background: rgba(255, 255, 255, 0.1); */
-    background-color: #4E9F3D;
-    color: #D8E9A8;
+    background-color: #54BAB9;
+    /* color: #D8E9A8; */
     /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
