@@ -15,13 +15,6 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-    confirmPassword: {
-        type: String,
-        require: true,
-        validate: function () {
-            return this.confirmPassword == this.password;
-        }
-    },
     pic: {
         type: String,
         default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
@@ -30,13 +23,12 @@ const userSchema = mongoose.Schema({
     timestamps: true
 })
 
-userSchema.pre('save', function () {
-    this.confirmPassword = undefined;
-})
-
 userSchema.pre('save', async function (next) {
     try {
-        const saltRounds = bcrypt.genSalt(10);
+        if (!this.isModified('password')) {
+            return next();
+        }
+        const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(this.password, saltRounds);
         this.password = hashedPassword;
         next();

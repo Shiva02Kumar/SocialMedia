@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setUserData } from './store';
 // import { ChatState } from '../contexts/ChatProvider';
 
 function RefreshHandler({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
   // const { setUser } = ChatState();
+  // const user = useSelector((state) => state.userKey);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchProtectedData = async () => {
@@ -17,6 +21,9 @@ function RefreshHandler({ setIsAuthenticated }) {
         });
 
         const data = await response.json();
+        dispatch(setUserData(data.userData));
+        // console.log(data.userData);
+
         // setUser(data.userData);
         if (data.success) {
           setIsAuthenticated(true);
@@ -30,8 +37,8 @@ function RefreshHandler({ setIsAuthenticated }) {
     };
 
     fetchProtectedData();
-  // }, [navigate, setIsAuthenticated, setUser]);
-  }, [navigate, setIsAuthenticated]);
+    // }, [navigate, setIsAuthenticated, setUser]);
+  }, [navigate, dispatch, setIsAuthenticated]);
   return (
     null
   )

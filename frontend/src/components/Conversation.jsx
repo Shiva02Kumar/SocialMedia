@@ -1,58 +1,45 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
+import { formatMessageTime } from '../utils/miscellaneous';
 
-function Conversation(props) {
-    const navigate = useNavigate();
-
-    function formatMessageTime(dateString) {
-        const messageDate = new Date(dateString);
-        const now = new Date();
-
-        const isToday =
-            messageDate.getDate() === now.getDate() &&
-            messageDate.getMonth() === now.getMonth() &&
-            messageDate.getFullYear() === now.getFullYear();
-
-        if (isToday) {
-            return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+function Conversation({ onClick, ifSearch, isGroupChat, chatName, users, latestMessage, name }) {
+    const user = useSelector((state) => state.userKey);
+    let latestContent = latestMessage ? latestMessage.content : 'No messages yet';
+    const formattedTime = latestMessage ? formatMessageTime(latestMessage.updatedAt) : '';
+    
+    const chatDisplayName = () => {
+        if (ifSearch) {
+            latestContent = ''
+            return name;
         }
-
-        const yesterday = new Date(now);
-        yesterday.setDate(now.getDate() - 1);
-
-        const isYesterday =
-            messageDate.getDate() === yesterday.getDate() &&
-            messageDate.getMonth() === yesterday.getMonth() &&
-            messageDate.getFullYear() === yesterday.getFullYear();
-
-        if (isYesterday) {
-            return "Yesterday";
+        if (isGroupChat) {
+            return chatName;
         }
-
-        const isThisYear = messageDate.getFullYear() === now.getFullYear();
-
-        if (isThisYear) {
-            return messageDate.toLocaleDateString([], { day: '2-digit', month: 'short' });
+    
+        if (users && users.length > 1) {
+            return user._id === users[0]._id ? users[1].name : users[0].name;
         }
-
-        return messageDate.toLocaleDateString([], { month: 'short', year: 'numeric' });
-    }
+    
+        return "Unknown Chat";
+    };
 
     return (
-        <div className='Conversation' onClick={() => { navigate('/chats'); }}>
+
+        <div className='Conversation' onClick={onClick}>
             <div className='conProfile'>
                 <FontAwesomeIcon icon={faUser} className='sidePanelHeaderIcon' />
             </div>
             <div className='conversationInfo'>
-                <div className="conversationMessage">
-                    <h3>{props.name}</h3>
-                    <p className='conTime'>{formatMessageTime(props.time)}</p>
+                <div className="conversationHeader">
+                    <h3>{chatDisplayName()}</h3>
+                    <p className='conTime'>{formattedTime}</p>
                 </div>
-                {/* <p className='conMessage'>{props.message.length > 30 ? props.message.slice(0, 30) + '...' : props.message}</p> */}
-                <p className='conMessage'>{props.message}</p>
-
+                <p className='conMessage'>
+                    {latestContent.length > 30 ? `${latestContent.slice(0, 30)}...` : latestContent}
+                </p>
             </div>
         </div>
     )

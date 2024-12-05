@@ -1,64 +1,28 @@
 import { React, useEffect, useRef, useState } from 'react'
-// import { ChatState } from '../contexts/ChatProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faPlus, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faPlus, faEllipsisVertical, faUser, faRightFromBracket, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Conversation from './Conversation';
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleError } from '../utils/ToastHandle';
+import { setSelectedChat } from '../utils/store';
 
 function SidePanel() {
-  // const { user } = ChatState();
-  const [conversations] = useState([
-    {
-      id: 1,
-      name: "Alice",
-      message: "Hello! How are you?",
-      time: "2024-11-07T08:15:30Z"
-    },
-    {
-      id: 2,
-      name: "Bob",
-      message: "I'm doing well, thanks! How about you?",
-      time: "2024-11-07T08:16:45Z"
-    },
-    {
-      id: 3,
-      name: "Charlie",
-      message: "Just finished a project, feeling accomplished!",
-      time: "2024-11-07T08:18:00Z"
-    },
-    {
-      id: 4,
-      name: "David",
-      message: "That's awesome! Want to catch up later?",
-      time: "2024-11-07T08:20:15Z"
-    },
-    {
-      id: 5,
-      name: "Eve",
-      message: "Sure, let me know a time that works!",
-      time: "2024-11-07T08:21:30Z"
-    },
-    {
-      id: 6,
-      name: "Frank",
-      message: "How about 5 PM?",
-      time: "2024-11-07T08:23:00Z"
-    },
-    {
-      id: 7,
-      name: "Grace",
-      message: "5 PM works perfectly. See you then!",
-      time: "2024-11-07T08:23:45Z"
-    }
-  ]);
-
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [userChats, setUserChats] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [ifSearch, setIfSearch] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const lightMode = useSelector((state) => state.themeKey);
   const dropdownRef = useRef(null);
+  const debounceTimeout = useRef(null);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    userChatsData();
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
@@ -71,6 +35,22 @@ function SidePanel() {
     };
   }, []);
 
+  const userChatsData = async () => {
+    const response = await fetch('http://localhost:8080/chats/userChats', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      setUserChats(result.data);
+    } else {
+      console.error('Failed to fetch chats:', result.message);
+    }
+  }
 
   const handleProfileClick = () => {
     console.log("Profile clicked");
@@ -78,6 +58,95 @@ function SidePanel() {
 
   const handleLogoutClick = () => {
     console.log("Logout clicked");
+  };
+
+  const searchUsers = async (e) => {
+    const query = e.target.value;
+    setLoading(true)
+    setIfSearch(true)
+    if (!query) {
+      setIfSearch(false)
+      setSearchedUsers([]);
+      setLoading(false)
+      return;
+    }
+    clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`http://localhost:8080/auth/user?search=${encodeURIComponent(query)}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        })
+        const result = await response.json();
+
+        if (result.success) {
+          setSearchedUsers(result.data);
+          setLoading(false)
+
+        } else {
+          handleError(result.message);
+          setSearchedUsers([]);
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error('Error searching users:', error);
+        handleError(error);
+        setSearchedUsers([]);
+        setLoading(false)
+      }
+    }, 500);
+  }
+
+  const handleConversationClick = async (userID) => {
+    try {
+      const response = await fetch('http://localhost:8080/chats/userChats', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ userID }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        console.log('Chat data:', data.data);
+        dispatch(setSelectedChat(data.data));
+        userChatsData();
+      } else {
+        console.error('Failed to access chat:', data.message);
+      }
+    } catch (error) {
+      console.error('Error accessing chat:', error);
+    }
+  };
+  
+  const handleOpenChat = (chatInfo) => {
+    dispatch(setSelectedChat(chatInfo));
+    navigate('/chats')
+  }
+
+  const renderConversations = () => {
+    const data = ifSearch ? searchedUsers : userChats;
+
+    if (loading) {
+      return <div className="loadingSpinner"><FontAwesomeIcon icon={faSpinner} spinPulse /></div>;
+    }
+    if (!data || data.length === 0) {
+      return <h2>No Chats Found</h2>;
+    }
+    return data.map((info) => (
+      <Conversation
+        key={info._id}
+        {...info}
+        onClick={() => ifSearch ? handleConversationClick(info._id) : handleOpenChat(info)}
+        ifSearch={ifSearch}
+      />
+    ));
   };
 
   return (
@@ -90,8 +159,7 @@ function SidePanel() {
           <FontAwesomeIcon icon={faPlus} className='sidePanelHeaderIcon' onClick={() => { navigate('/CreateGroup'); }} />
           <div className="dropdownContainer" ref={dropdownRef}>
             <FontAwesomeIcon icon={faEllipsisVertical} className='sidePanelHeaderIcon' onClick={() => { setDropdownVisible(!dropdownVisible); }} />
-            {dropdownVisible && (
-              <div className="dropdownMenu">
+              <div className={`dropdownMenu ${dropdownVisible ? "show" : ""}`}>
                 <div className="dropdownItem" onClick={handleProfileClick}>
                   <FontAwesomeIcon icon={faUser} className='dropdownIcon' />
                   <p className='dropdownText'>Profile</p>
@@ -101,18 +169,15 @@ function SidePanel() {
                   <p className='dropdownText'>Log Out</p>
                 </div>
               </div>
-            )}
           </div>
         </div>
       </div>
       <div className="sidePanelSearch">
         <FontAwesomeIcon icon={faMagnifyingGlass} className="sidePanelHeaderIcon" />
-        <input type="text" name="search" id="searchBox" className={(lightMode? '' : " darkSearch")} placeholder='Search' />
+        <input type="text" name="search" id="searchBox" className={(lightMode ? '' : " darkSearch")} placeholder='Search' onChange={(e) => searchUsers(e)} />
       </div>
       <div className="sidePanelConversations">
-        {conversations.map((ConversationInfo) => {
-          return <Conversation key={ConversationInfo.id} {...ConversationInfo} />
-        })}
+        {renderConversations()}
       </div>
     </div>
   )

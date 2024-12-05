@@ -60,17 +60,27 @@ async function signIn(req, res) {
 async function signUp(req, res) {
     try {
         const { name, email, password, confirmPassword } = req.body;
-        console.log(req.file.filename);
-        if (req.file) {
-            pic = req.file.filename;
+        let pic = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+        if (password !== confirmPassword) {
+            return res.status(400)
+                .json({
+                    message: "Passwords do not match.",
+                    success: false
+                });
         }
         const user = await userModel.findOne({ email: email });
         if (user) {
             return res.status(409)
-                .json({ message: "User Already Exists, You Can Login", success: false });
+                .json({
+                    message: "User Already Exists, You Can Login",
+                    success: false
+                });
+        }
+        if (req.file) {
+            console.log(req.file.filename);
+            pic = req.file.filename;
         }
         const newUser = new userModel({ name, email, password, confirmPassword, pic });
-        console.log(newUser);
 
         await newUser.save()
         return res.status(201)
@@ -129,7 +139,6 @@ async function searchUsers(req, res) {
                 success: false,
             });
         }
-        console.log(query);
         const users = await userModel.find({
             _id: { $ne: req.user._id },
             $or: [
@@ -137,7 +146,6 @@ async function searchUsers(req, res) {
                 { email: { $regex: query, $options: 'i' } }
             ]
         }).select('-password');
-        console.log(users);
 
         if (users.length === 0) {
             return res.status(404).json({

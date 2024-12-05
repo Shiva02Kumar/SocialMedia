@@ -10,7 +10,7 @@
 
 .darkMain {
     background: none !important;
-    background-color: #31363F !important; 
+    background-color: #31363F !important;
 }
 
 .sidePanel {
@@ -37,7 +37,7 @@
     z-index: 100;
 }
 
-.sidePanelHeader h1{
+.sidePanelHeader h1 {
     color: #219B9D;
 }
 
@@ -64,6 +64,17 @@
     border-radius: 10px;
     /* padding: 10px; */
     z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.dropdownMenu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    /* Enable interactions when visible */
 }
 
 /* Dropdown Items */
@@ -71,7 +82,7 @@
     padding: 10px;
     cursor: pointer;
     /* color: #333; */
-    transition: background-color 0.2s;
+    transition: background-color 0.5s;
     /* text-align: left; */
     display: flex;
     align-items: center;
@@ -142,6 +153,11 @@
     overflow-y: auto;
 }
 
+.sidePanelConversations h2 {
+    text-align: center;
+    margin: 50% 0;
+}
+
 .sidePanelConversations::-webkit-scrollbar,
 .mainPanelChatArea::-webkit-scrollbar {
     width: 8px;
@@ -172,6 +188,7 @@
     padding: 10px;
     margin: 5px;
     max-height: 75px;
+    height: 75px;
 }
 
 .Conversation:hover {
@@ -188,7 +205,7 @@
     flex: 1;
 }
 
-.conversationMessage {
+.conversationHeader {
     display: flex;
     justify-content: space-between;
 }
@@ -244,15 +261,15 @@
 
 .mainPanelChatArea {
     display: flex;
-    flex-direction: column-reverse;
-    /* justify-content: center; */
+    flex-direction: column;
+    justify-content: end;
     /* align-items: center; */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     margin: 5px 15px 5px 5px;
     flex: 1;
     overflow-y: auto;
@@ -286,51 +303,82 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    margin: 10px;
+    /* margin: 10px; */
 }
+
 
 .othersInfo {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* background: rgba(255, 255, 255, 0.1); */
+    justify-content: center;
+    align-items: end;
     background-color: #219B9D;
     /* color: #D8E9A8; */
     /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
+    min-width: 5vw;
+    max-width: 50vw;
+}
+
+.othersPic {
+    width: 50px;
 }
 
 .sentByMe {
     display: flex;
     align-items: center;
     justify-content: end;
-    margin: 10px;
+    /* margin: 10px; */
 }
 
 .myInfo {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* background: rgba(255, 255, 255, 0.1); */
+    justify-content: center;
+    align-items: end;
     background-color: #54BAB9;
     /* color: #D8E9A8; */
     /* backdrop-filter: blur(10px); */
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
+    min-width: 5vw;
+    max-width: 50vw;
 }
 
 .messageTime {
     text-align: end;
     font-size: 0.8rem;
+    margin: 0 0 0 20px;
+}
+
+.dateBanner {
+    text-align: center;
+    /* color: #666; */
+    margin: 10px;
+}
+
+.dateBanner span{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    
 }
 
 .homePanelArea {
     display: flex;
     flex-direction: column;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
@@ -366,7 +414,7 @@
     overflow-y: auto;
 }
 
-.createGroupInputBox { 
+.createGroupInputBox {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -378,4 +426,12 @@
     border-radius: 10px;
     padding: 5px;
     width: 90%;
+}
+
+.loadingSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    height: 100%;
 }

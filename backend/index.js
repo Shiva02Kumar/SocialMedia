@@ -4,7 +4,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const { default: mongoose } = require('mongoose');
 const authRouter = require('./routes/AuthRouter');
-const productRouter = require('./routes/ProductRouter');
+const chatRouter = require('./routes/ChatRouter');
+const messageRouter = require('./routes/MessageRouter');
 
 require('dotenv').config();
 
@@ -34,7 +35,8 @@ app.use(cors({
 app.use(cookieParser())
 
 app.use('/auth', authRouter);
-app.use('/products', productRouter);
+app.use('/chats', chatRouter)
+app.use('/messages', messageRouter)
 
 connectDb();
 
