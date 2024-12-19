@@ -22,7 +22,7 @@ function MainPanel() {
       if (!selectedChat) return;
       try {
         setloading(true)
-        const response = await fetch(`http://localhost:8080/messages/${selectedChat._id}`, {
+        const response = await fetch(`/messages/${selectedChat._id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ function MainPanel() {
     if (e.key === "Enter" && newMessage) {
       try {
         setNewMessage("");
-        const response = await fetch('http://localhost:8080/messages/', {
+        const response = await fetch('/messages/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

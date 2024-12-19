@@ -59,7 +59,7 @@ function SideBar() {
     const handleLogout = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8080/auth/logout', {
+            const response = await fetch('/auth/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

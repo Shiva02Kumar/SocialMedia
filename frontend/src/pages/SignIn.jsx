@@ -30,7 +30,7 @@ function SignIn() {
       return handleError('Missing Fields')
     }
     try {
-      const response = await fetch("http://localhost:8080/auth/signin", {
+      const response = await fetch("/auth/signin", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

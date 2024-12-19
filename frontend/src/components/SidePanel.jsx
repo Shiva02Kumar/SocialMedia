@@ -36,7 +36,7 @@ function SidePanel() {
   }, []);
 
   const userChatsData = async () => {
-    const response = await fetch('http://localhost:8080/chats/userChats', {
+    const response = await fetch('/chats/userChats', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ function SidePanel() {
     debounceTimeout.current = setTimeout(async () => {
       try {
         setLoading(true)
-        const response = await fetch(`http://localhost:8080/auth/user?search=${encodeURIComponent(query)}`, {
+        const response = await fetch(`/auth/user?search=${encodeURIComponent(query)}`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ function SidePanel() {
 
   const handleConversationClick = async (userID) => {
     try {
-      const response = await fetch('http://localhost:8080/chats/userChats', {
+      const response = await fetch('/chats/userChats', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

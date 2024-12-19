@@ -46,7 +46,7 @@ function SignUp() {
       formData.append('password', password);
       formData.append('confirmPassword', confirmPassword);
       if (pic) formData.append('pic', pic);
-      const response = await fetch("http://localhost:8080/auth/signup", {
+      const response = await fetch("/auth/signup", {
         method: "POST",
         body: formData
       })
