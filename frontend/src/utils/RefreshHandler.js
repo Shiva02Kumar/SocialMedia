@@ -15,7 +15,7 @@ function RefreshHandler({ setIsAuthenticated }) {
     const fetchProtectedData = async () => {
       try {
 
-        const response = await fetch('http://localhost:8080/auth/protected', {
+        const response = await fetch('/auth/protected', {
           method: 'GET',
           credentials: 'include',
         });
