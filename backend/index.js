@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const path = require("path")
 const { default: mongoose } = require('mongoose');
 const authRouter = require('./routes/AuthRouter');
 const chatRouter = require('./routes/ChatRouter');
@@ -38,11 +39,11 @@ app.use('/auth', authRouter);
 app.use('/chats', chatRouter)
 app.use('/messages', messageRouter)
 
-const __dirname = path.resolve();
+const __dirname1 = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
   })
 }
 else {
